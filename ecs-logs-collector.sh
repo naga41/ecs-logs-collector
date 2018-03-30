@@ -169,6 +169,8 @@ collect_brief() {
   get_system_services
   get_docker_info
   get_ecs_agent_logs
+  get_ecs_cni_bridge_plugin_logs
+  get_ecs_cni_eni_plugin_logs
   get_ecs_init_logs
   get_containers_info
   get_docker_logs
@@ -345,6 +347,32 @@ get_ecs_agent_logs()
 
   mkdir -p ${dstdir}
   for entry in ecs-agent.log*; do
+    cp -fR /var/log/ecs/${entry} ${dstdir}/
+  done
+
+  ok
+}
+
+get_ecs_cni_bridge_plugin_logs()
+{
+  try "collect Amazon ECS CNI Bridge Plugin logs"
+  dstdir="${info_system}/ecs-cni-bridge-plugin"
+
+  mkdir -p ${dstdir}
+  for entry in ecs-cni-bridge-plugin.log*; do
+    cp -fR /var/log/ecs/${entry} ${dstdir}/
+  done
+
+  ok
+}
+
+get_ecs_cni_eni_plugin_logs()
+{
+  try "collect Amazon ECS CNI ENI Plugin logs"
+  dstdir="${info_system}/ecs-cni-eni-plugin"
+
+  mkdir -p ${dstdir}
+  for entry in ecs-cni-eni-plugin.log*; do
     cp -fR /var/log/ecs/${entry} ${dstdir}/
   done
 
